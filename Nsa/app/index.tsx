@@ -13,6 +13,8 @@ const Index = () => {
   const [senha, setSenha] = useState("");
   const [codigoEtec, setCodigoEtec] = useState("");
 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nsa</Text>
@@ -52,13 +54,13 @@ const Index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f4f8",
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "bold",
     marginBottom: 20,
     color: "#333",
