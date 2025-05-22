@@ -3,18 +3,20 @@ import "firebase/compat/firestore";
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 
-// Configuração do Firebase
 const firebaseConfig = {
-
+  apiKey: process.env.EXPO_PUBLIC_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_APP_ID
 };
 
-if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app(); // Usar a instância já inicializada, caso exista
-}
 
-// Tipagem dos dados
+
+
+  
 interface Nome {
   id: string;
   Nome: string;
@@ -25,7 +27,6 @@ export default function Index() {
   const [nomes, setNomes] = useState<Nome[]>([]);
 
   useEffect(() => {
-    // Função para buscar os dados do Firestore
     const fetchData = async () => {
       const nomesCollection = firebase.firestore().collection('Nomes');
       const snapshot = await nomesCollection.get();
@@ -34,7 +35,6 @@ export default function Index() {
       snapshot.forEach((doc) => {
         const docData = doc.data();
         if (docData.Nome && docData.Sobrenome) {
-          // Preencher o array com os dados do documento
           data.push({ id: doc.id, Nome: docData.Nome, Sobrenome: docData.Sobrenome });
         }
       });
@@ -42,10 +42,9 @@ export default function Index() {
       setNomes(data);
     };
 
-    fetchData(); // Chamada da função para buscar dados
+    fetchData();
   }, []);
 
-  // Função para renderizar cada item na FlatList
   const renderItem = ({ item }: { item: Nome }) => (
     <View style={{ padding: 10 }}>
       <Text>{item.Nome} {item.Sobrenome}</Text>
